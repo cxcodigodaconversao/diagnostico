@@ -574,7 +574,7 @@ export default function DiagnosticoCX() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {MODULOS.map((modulo, idx) => (
-              <div key={idx} className="bg-[#1a2332] rounded-lg p-6 border border-[#d2bc8f]">
+              <div key={idx} className="bg-[#1a2332] rounded-lg p-6" style={{border: '2px solid #d2bc8f'}}>
                 <div className="w-4 h-4 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
                 <h3 className="font-bold text-[#d2bc8f] mb-3 text-lg">{modulo.nome}</h3>
                 <p className="text-white text-sm">{modulo.explicacao}</p>
@@ -729,7 +729,7 @@ export default function DiagnosticoCX() {
           <p className="text-white mb-6">{moduloInfo.explicacao}</p>
         </div>
 
-        <div className="bg-[#1a2332] rounded-xl p-8 mb-6 border-l-4" style={{borderLeftColor: moduloInfo.cor}}>
+        <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
           <h3 className="text-2xl font-semibold mb-6 text-white leading-relaxed">
             {perguntaInfo.pergunta}
           </h3>
@@ -753,7 +753,12 @@ export default function DiagnosticoCX() {
                 <button
                   key={i}
                   onClick={() => handleResposta(i)}
-                  className="bg-[#1a2332] hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-3 px-2 rounded-lg font-semibold transition-all duration-200 text-sm border border-gray-600"
+                  className="hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-3 px-2 rounded-lg font-semibold transition-all duration-200 text-sm"
+                  style={{
+                    backgroundColor: '#1a2332',
+                    border: '2px solid #d2bc8f',
+                    color: '#0c121c'
+                  }}
                 >
                   {i}
                 </button>
