@@ -167,9 +167,9 @@ const MODULOS = [
 
 // Componente Radar SVG AMPLIADO
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 800; // AUMENTADO de 600 para 800
+  const size = 900; // AUMENTADO de 800 para 900 para acomodar melhor os textos
   const center = size / 2;
-  const maxRadius = 280; // AUMENTADO de 160 para 280
+  const maxRadius = 280;
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -256,7 +256,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 120); // AUMENTADO espaçamento
+          const labelPoint = calculatePoint(angles[i], maxRadius + 140); // AUMENTADO espaçamento de 120 para 140
           const porcentagem = showPercentage ? data[i] : '';
           
           // Quebrar o nome em linhas menores
@@ -280,11 +280,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
             <g key={i}>
               <text
                 x={labelPoint.x}
-                y={labelPoint.y - 20} // AUMENTADO espaçamento
+                y={labelPoint.y - 25} // AUMENTADO espaçamento de 20 para 25
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="white"
-                fontSize="14" // AUMENTADO de 10 para 14
+                fontSize="14"
                 fontWeight="bold"
               >
                 {linha1}
@@ -292,11 +292,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha2 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y - 5} // AUMENTADO espaçamento
+                  y={labelPoint.y - 8} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="14" // AUMENTADO
+                  fontSize="14"
                   fontWeight="bold"
                 >
                   {linha2}
@@ -305,11 +305,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha3 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + 10} // AUMENTADO espaçamento
+                  y={labelPoint.y + 9} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="14" // AUMENTADO
+                  fontSize="14"
                   fontWeight="bold"
                 >
                   {linha3}
@@ -318,11 +318,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linha3 ? 30 : 20)} // AUMENTADO espaçamento
+                  y={labelPoint.y + (linha3 ? 35 : 25)} // AUMENTADO espaçamento para porcentagem
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="16" // AUMENTADO de 12 para 16
+                  fontSize="16"
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -333,7 +333,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
         })}
 
         {/* Legenda */}
-        <g transform={`translate(30, ${size - 80})`}>
+        <g transform={`translate(30, ${size - 100})`}>
           <rect x="0" y="0" width="16" height="16" fill="#d2bc8f" />
           <text x="22" y="12" fill="white" fontSize="14" fontWeight="bold">Resultado Atual</text>
           <rect x="0" y="25" width="16" height="16" fill="#10b981" />
@@ -492,7 +492,7 @@ export default function DiagnosticoCX() {
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4 flex items-center justify-center">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-[#d2bc8f] mb-6">
-            📊 Diagnóstico Personalizado
+            Diagnóstico Personalizado
           </h1>
           <h2 className="text-2xl font-bold text-white mb-8">
             Código da Conversão Consciente
@@ -541,7 +541,7 @@ export default function DiagnosticoCX() {
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold text-[#d2bc8f] mb-8">
-            📊 Olá, {nomeUsuario}! Sessão de Diagnóstico
+            Olá, {nomeUsuario}! Sessão de Diagnóstico
           </h1>
           <h2 className="text-3xl font-bold text-white mb-12">
             Código da Conversão Consciente
@@ -608,7 +608,7 @@ export default function DiagnosticoCX() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-[#d2bc8f] mb-4">
-              🎯 Resultado do Diagnóstico CX
+              Resultado do Diagnóstico CX
             </h1>
             <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
               <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
@@ -628,7 +628,7 @@ export default function DiagnosticoCX() {
 
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-[#d2bc8f] text-center mb-8">
-              📊 Diagnóstico empresa atual vs empresa ideal de conversão
+              Diagnóstico empresa atual vs empresa ideal de conversão
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
           </div>
@@ -644,7 +644,7 @@ export default function DiagnosticoCX() {
             
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-[#d2bc8f] mb-3">
-                📈 Pontos de Evolução Identificados:
+                Pontos de Evolução Identificados:
               </h3>
               <div className="space-y-2">
                 {recomendacoes.pontosEvolucao.map((ponto, idx) => (
@@ -659,7 +659,7 @@ export default function DiagnosticoCX() {
               </p>
               <div className="text-center">
                 <button className="bg-[#d2bc8f] text-[#0c121c] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#e6d0a3] transition-colors mr-4">
-                  🚀 Quero Conhecer o Método Completo
+                  Quero Conhecer o Método Completo
                 </button>
                 <button
                   onClick={reiniciar}
@@ -703,7 +703,7 @@ export default function DiagnosticoCX() {
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[#d2bc8f] mb-4">
-            📊 Diagnóstico CX – Código da Conversão
+            Diagnóstico CX – Código da Conversão
           </h1>
           <div className="bg-[#1a2332] rounded-full h-3 mb-4">
             <div 
@@ -730,7 +730,7 @@ export default function DiagnosticoCX() {
         </div>
 
         <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
-          <h3 className="text-2xl font-semibold mb-6 text-white leading-relaxed">
+          <h3 className="text-3xl font-bold mb-6 text-white leading-relaxed">
             {perguntaInfo.pergunta}
           </h3>
 
@@ -741,7 +741,7 @@ export default function DiagnosticoCX() {
                 {perguntaInfo.explicacao}
               </p>
               <p className="text-white italic">
-                💡 {perguntaInfo.dica}
+                {perguntaInfo.dica}
               </p>
             </div>
           )}
