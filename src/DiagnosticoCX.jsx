@@ -167,9 +167,9 @@ const MODULOS = [
 
 // Componente Radar SVG AMPLIADO
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 900; // AUMENTADO de 800 para 900 para acomodar melhor os textos
+  const size = 1000; // AUMENTADO de 900 para 1000 para desktop
   const center = size / 2;
-  const maxRadius = 280;
+  const maxRadius = 300; // AUMENTADO de 280 para 300
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -203,7 +203,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
             r={(maxRadius * (i + 1)) / levels}
             fill="none"
             stroke="#666"
-            strokeWidth="1"
+            strokeWidth="2" // AUMENTADO de 1 para 2
             opacity="0.3"
           />
         ))}
@@ -219,7 +219,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
               x2={endPoint.x}
               y2={endPoint.y}
               stroke="#666"
-              strokeWidth="1"
+              strokeWidth="2" // AUMENTADO de 1 para 2
               opacity="0.3"
             />
           );
@@ -230,7 +230,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(idealPoints)}
           fill="rgba(16, 185, 129, 0.1)"
           stroke="#10b981"
-          strokeWidth="3" // AUMENTADO
+          strokeWidth="4" // AUMENTADO de 3 para 4
         />
 
         {/* Polígono atual (dourado) */}
@@ -238,7 +238,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(actualPoints)}
           fill="rgba(210, 188, 143, 0.3)"
           stroke="#d2bc8f"
-          strokeWidth="4" // AUMENTADO
+          strokeWidth="5" // AUMENTADO de 4 para 5
         />
 
         {/* Pontos do resultado atual */}
@@ -247,16 +247,16 @@ const RadarChart = ({ data, showPercentage = false }) => {
             key={i}
             cx={point.x}
             cy={point.y}
-            r="8" // AUMENTADO de 6 para 8
+            r="10" // AUMENTADO de 8 para 10
             fill="#d2bc8f"
             stroke="white"
-            strokeWidth="3" // AUMENTADO
+            strokeWidth="4" // AUMENTADO de 3 para 4
           />
         ))}
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 140); // AUMENTADO espaçamento de 120 para 140
+          const labelPoint = calculatePoint(angles[i], maxRadius + 180); // AUMENTADO de 140 para 180
           const porcentagem = showPercentage ? data[i] : '';
           
           // Quebrar o nome em linhas menores
@@ -280,11 +280,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
             <g key={i}>
               <text
                 x={labelPoint.x}
-                y={labelPoint.y - 25} // AUMENTADO espaçamento de 20 para 25
+                y={labelPoint.y - 35} // AUMENTADO espaçamento de 25 para 35
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="white"
-                fontSize="14"
+                fontSize="18" // AUMENTADO de 14 para 18
                 fontWeight="bold"
               >
                 {linha1}
@@ -292,11 +292,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha2 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y - 8} // AUMENTADO espaçamento
+                  y={labelPoint.y - 15} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="14"
+                  fontSize="18" // AUMENTADO
                   fontWeight="bold"
                 >
                   {linha2}
@@ -305,11 +305,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha3 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + 9} // AUMENTADO espaçamento
+                  y={labelPoint.y + 5} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="14"
+                  fontSize="18" // AUMENTADO
                   fontWeight="bold"
                 >
                   {linha3}
@@ -318,11 +318,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linha3 ? 35 : 25)} // AUMENTADO espaçamento para porcentagem
+                  y={labelPoint.y + (linha3 ? 45 : 35)} // AUMENTADO espaçamento para porcentagem
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="16"
+                  fontSize="20" // AUMENTADO de 16 para 20
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -333,11 +333,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
         })}
 
         {/* Legenda */}
-        <g transform={`translate(30, ${size - 100})`}>
-          <rect x="0" y="0" width="16" height="16" fill="#d2bc8f" />
-          <text x="22" y="12" fill="white" fontSize="14" fontWeight="bold">Resultado Atual</text>
-          <rect x="0" y="25" width="16" height="16" fill="#10b981" />
-          <text x="22" y="37" fill="white" fontSize="14" fontWeight="bold">Resultado Ideal</text>
+        <g transform={`translate(40, ${size - 120})`}>
+          <rect x="0" y="0" width="20" height="20" fill="#d2bc8f" />
+          <text x="28" y="16" fill="white" fontSize="16" fontWeight="bold">Resultado Atual</text>
+          <rect x="0" y="30" width="20" height="20" fill="#10b981" />
+          <text x="28" y="46" fill="white" fontSize="16" fontWeight="bold">Resultado Ideal</text>
         </g>
       </svg>
     </div>
@@ -490,16 +490,16 @@ export default function DiagnosticoCX() {
   if (!nomeCapturado) {
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4 flex items-center justify-center">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl font-bold mb-6" style={{color: '#d2bc8f'}}>
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-6xl font-bold mb-6" style={{color: '#d2bc8f'}}>
             Diagnóstico Personalizado
           </h1>
-          <h2 className="text-2xl font-bold mb-8" style={{color: '#d2bc8f'}}>
+          <h2 className="text-3xl font-bold mb-8" style={{color: '#d2bc8f'}}>
             Código da Conversão Consciente
           </h2>
           
-          <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
-            <p className="text-xl text-white font-bold mb-6">
+          <div className="bg-[#1a2332] rounded-xl p-10 mb-8 border border-[#d2bc8f]">
+            <p className="text-2xl text-white font-bold mb-6">
               Antes de começar, como posso me dirigir a você?
             </p>
             <input
@@ -512,8 +512,8 @@ export default function DiagnosticoCX() {
                 color: '#0c121c',
                 border: '2px solid #d2bc8f',
                 borderRadius: '8px',
-                padding: '12px 16px',
-                fontSize: '18px',
+                padding: '16px 20px',
+                fontSize: '20px',
                 textAlign: 'center',
                 width: '100%',
                 outline: 'none'
@@ -526,7 +526,7 @@ export default function DiagnosticoCX() {
           <button
             onClick={() => nomeUsuario.trim() && setNomeCapturado(true)}
             disabled={!nomeUsuario.trim()}
-            className="bg-[#d2bc8f] text-[#0c121c] px-12 py-4 rounded-xl font-bold text-xl hover:bg-[#e6d0a3] transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-[#d2bc8f] text-[#0c121c] px-12 py-4 rounded-xl font-bold text-2xl hover:bg-[#e6d0a3] transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continuar
           </button>
@@ -539,46 +539,46 @@ export default function DiagnosticoCX() {
   if (!iniciado) {
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-8" style={{color: '#d2bc8f'}}>
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-6xl font-bold mb-8" style={{color: '#d2bc8f'}}>
             Olá, {nomeUsuario}! Sessão de Diagnóstico
           </h1>
-          <h2 className="text-3xl font-bold mb-12" style={{color: '#d2bc8f'}}>
+          <h2 className="text-4xl font-bold mb-12" style={{color: '#d2bc8f'}}>
             Código da Conversão Consciente
           </h2>
           
-          <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
-            <div className="space-y-6 text-left max-w-3xl mx-auto">
+          <div className="bg-[#1a2332] rounded-xl p-10 mb-8 border border-[#d2bc8f]">
+            <div className="space-y-6 text-left max-w-5xl mx-auto">
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">1</span>
-                <p className="text-xl text-white">
+                <p className="text-2xl text-white">
                   <strong>Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico</strong>
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">2</span>
-                <p className="text-xl text-white">
+                <p className="text-2xl text-white">
                   <strong>A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal</strong>
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">3</span>
-                <p className="text-xl text-white">
+                <p className="text-2xl text-white">
                   <strong>Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.</strong>
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {MODULOS.map((modulo, idx) => (
-              <div key={idx} className="bg-[#1a2332] rounded-lg p-6" style={{border: '2px solid #d2bc8f'}}>
-                <div className="w-4 h-4 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
-                <h3 className="font-bold text-[#d2bc8f] mb-3 text-xl">{modulo.nome}</h3>
-                <p className="text-white text-sm">{modulo.explicacao}</p>
-                <div className="mt-4 text-[#d2bc8f] font-bold text-base">
+              <div key={idx} className="bg-[#1a2332] rounded-lg p-8" style={{border: '2px solid #d2bc8f'}}>
+                <div className="w-6 h-6 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
+                <h3 className="font-bold text-[#d2bc8f] mb-3 text-2xl">{modulo.nome}</h3>
+                <p className="text-white text-lg">{modulo.explicacao}</p>
+                <div className="mt-4 text-[#d2bc8f] font-bold text-lg">
                   {modulo.perguntas.length} perguntas
                 </div>
               </div>
@@ -587,7 +587,7 @@ export default function DiagnosticoCX() {
 
           <button
             onClick={() => setIniciado(true)}
-            className="bg-[#d2bc8f] text-[#0c121c] px-12 py-4 rounded-xl font-bold text-xl hover:bg-[#e6d0a3] transition-all duration-300 transform hover:scale-105 shadow-lg"
+            className="bg-[#d2bc8f] text-[#0c121c] px-12 py-4 rounded-xl font-bold text-2xl hover:bg-[#e6d0a3] transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             Iniciar Diagnóstico
           </button>
@@ -605,65 +605,65 @@ export default function DiagnosticoCX() {
 
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold mb-4" style={{color: '#d2bc8f'}}>
+            <h1 className="text-5xl font-bold mb-4" style={{color: '#d2bc8f'}}>
               Resultado do Diagnóstico CX
             </h1>
-            <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
-              <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
+            <div className="bg-[#1a2332] rounded-xl p-10 border-2 border-[#d2bc8f]">
+              <div className="text-7xl font-bold mb-4" style={{color: resultado.cor}}>
                 {resultado.porcentagem}%
               </div>
-              <div className="text-2xl font-semibold mb-2" style={{color: resultado.cor}}>
+              <div className="text-3xl font-semibold mb-2" style={{color: resultado.cor}}>
                 Nível: {resultado.nivel}
               </div>
-              <div className="text-lg text-white mb-4">
+              <div className="text-xl text-white mb-4">
                 {resultado.total} de {resultado.totalPossivel} pontos
               </div>
-              <p className="text-xl text-white leading-relaxed">
+              <p className="text-2xl text-white leading-relaxed">
                 {resultado.interpretacao}
               </p>
             </div>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-center mb-8" style={{color: '#d2bc8f'}}>
+            <h2 className="text-4xl font-bold text-center mb-8" style={{color: '#d2bc8f'}}>
               Diagnóstico empresa atual vs empresa ideal de conversão
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
           </div>
 
           {/* Recomendações Personalizadas */}
-          <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
-            <h2 className="text-2xl font-bold mb-4" style={{color: '#d2bc8f'}}>
+          <div className="bg-[#1a2332] rounded-xl p-10 mb-8 border border-[#d2bc8f]">
+            <h2 className="text-3xl font-bold mb-4" style={{color: '#d2bc8f'}}>
               {recomendacoes.titulo}
             </h2>
-            <p className="text-xl text-white mb-6 leading-relaxed">
+            <p className="text-2xl text-white mb-6 leading-relaxed">
               {recomendacoes.mensagem}
             </p>
             
             <div className="mb-6">
-              <h3 className="text-lg font-bold text-[#d2bc8f] mb-3">
+              <h3 className="text-xl font-bold text-[#d2bc8f] mb-3">
                 Pontos de Evolução Identificados:
               </h3>
               <div className="space-y-2">
                 {recomendacoes.pontosEvolucao.map((ponto, idx) => (
-                  <p key={idx} className="text-white" dangerouslySetInnerHTML={{__html: ponto}} />
+                  <p key={idx} className="text-white text-lg" dangerouslySetInnerHTML={{__html: ponto}} />
                 ))}
               </div>
             </div>
 
-            <div className="bg-[#0c121c] rounded-lg p-6 border border-[#d2bc8f]">
-              <p className="text-xl text-white font-semibold text-center mb-4">
+            <div className="bg-[#0c121c] rounded-lg p-8 border border-[#d2bc8f]">
+              <p className="text-2xl text-white font-semibold text-center mb-4">
                 {recomendacoes.cta}
               </p>
               <div className="text-center">
-                <button className="bg-[#d2bc8f] text-[#0c121c] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#e6d0a3] transition-colors mr-4">
+                <button className="bg-[#d2bc8f] text-[#0c121c] px-8 py-4 rounded-lg font-bold text-xl hover:bg-[#e6d0a3] transition-colors mr-4">
                   Quero Conhecer o Método Completo
                 </button>
                 <button
                   onClick={reiniciar}
-                  className="bg-gray-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors"
+                  className="bg-gray-600 text-white px-6 py-4 rounded-lg font-semibold text-xl hover:bg-gray-700 transition-colors"
                 >
                   Refazer Diagnóstico
                 </button>
@@ -671,19 +671,19 @@ export default function DiagnosticoCX() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             {MODULOS.map((modulo, idx) => {
               const resultadoModulo = resultadosModulo[idx];
               return (
-                <div key={idx} className="bg-[#1a2332] rounded-lg p-6 border-l-4" style={{borderLeftColor: modulo.cor}}>
+                <div key={idx} className="bg-[#1a2332] rounded-lg p-8 border-l-4" style={{borderLeftColor: modulo.cor}}>
                   <div className="flex items-center mb-3">
-                    <div className="w-4 h-4 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
-                    <h3 className="font-bold text-[#d2bc8f] text-base">{modulo.nome}</h3>
+                    <div className="w-6 h-6 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
+                    <h3 className="font-bold text-[#d2bc8f] text-lg">{modulo.nome}</h3>
                   </div>
-                  <div className="text-3xl font-bold mb-2" style={{color: modulo.cor}}>
+                  <div className="text-4xl font-bold mb-2" style={{color: modulo.cor}}>
                     {resultadoModulo.porcentagem}%
                   </div>
-                  <div className="text-sm text-white">
+                  <div className="text-lg text-white">
                     {resultadoModulo.pontuacao}/{resultadoModulo.maxPontos} pontos
                   </div>
                 </div>
@@ -700,9 +700,9 @@ export default function DiagnosticoCX() {
 
   return (
     <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-4" style={{color: '#d2bc8f'}}>
+          <h1 className="text-4xl font-bold mb-4" style={{color: '#d2bc8f'}}>
             Diagnóstico CX – Código da Conversão
           </h1>
           <div className="bg-[#1a2332] rounded-full h-3 mb-4">
@@ -711,7 +711,7 @@ export default function DiagnosticoCX() {
               style={{width: `${progresso}%`}}
             ></div>
           </div>
-          <p className="text-white font-bold text-lg">
+          <p className="text-white font-bold text-xl">
             Pergunta {perguntaAtual + 1} de {totalPerguntas}
           </p>
         </div>
@@ -722,38 +722,38 @@ export default function DiagnosticoCX() {
               className="w-4 h-4 rounded-full mr-3"
               style={{backgroundColor: moduloInfo.cor}}
             ></div>
-            <h2 className="text-xl font-bold text-[#d2bc8f]">
+            <h2 className="text-2xl font-bold text-[#d2bc8f]">
               {moduloInfo.nome}
             </h2>
           </div>
-          <p className="text-white mb-6">{moduloInfo.explicacao}</p>
+          <p className="text-white mb-6 text-lg">{moduloInfo.explicacao}</p>
         </div>
 
-        <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
-          <h3 className="text-3xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
+        <div className="bg-[#1a2332] rounded-xl p-10 mb-6" style={{border: '2px solid #d2bc8f'}}>
+          <h3 className="text-4xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
             {perguntaInfo.pergunta}
           </h3>
 
           {mostrarExplicacao && (
-            <div className="bg-[#0c121c] rounded-lg p-4 mb-6 border border-[#d2bc8f]">
-              <p className="text-white mb-3">
-                <strong className="text-[#d2bc8f] text-lg">Por que esta pergunta é importante:</strong><br/>
+            <div className="bg-[#0c121c] rounded-lg p-6 mb-6 border border-[#d2bc8f]">
+              <p className="text-white mb-3 text-lg">
+                <strong className="text-[#d2bc8f] text-xl">Por que esta pergunta é importante:</strong><br/>
                 {perguntaInfo.explicacao}
               </p>
-              <p className="text-white italic">
+              <p className="text-white italic text-lg">
                 {perguntaInfo.dica}
               </p>
             </div>
           )}
 
           <div className="space-y-3">
-            <p className="text-white font-bold text-lg mb-4">Avalie de 0 (nunca) a 10 (sempre):</p>
+            <p className="text-white font-bold text-xl mb-4">Avalie de 0 (nunca) a 10 (sempre):</p>
             <div className="grid grid-cols-11 gap-2">
               {[...Array(11)].map((_, i) => (
                 <button
                   key={i}
                   onClick={() => handleResposta(i)}
-                  className="hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-3 px-2 rounded-lg font-semibold transition-all duration-200 text-sm"
+                  className="hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-4 px-3 rounded-lg font-semibold transition-all duration-200 text-lg"
                   style={{
                     backgroundColor: '#1a2332',
                     border: '2px solid #d2bc8f',
@@ -764,7 +764,7 @@ export default function DiagnosticoCX() {
                 </button>
               ))}
             </div>
-            <div className="flex justify-between text-xs text-white mt-2">
+            <div className="flex justify-between text-lg text-white mt-2">
               <span>Nunca</span>
               <span>Sempre</span>
             </div>
