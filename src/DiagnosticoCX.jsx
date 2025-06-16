@@ -167,9 +167,9 @@ const MODULOS = [
 
 // Componente Radar SVG AMPLIADO
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 1000; // AUMENTADO de 900 para 1000 para desktop
+  const size = 1200; // AUMENTADO de 1000 para 1200 para muito mais espaço
   const center = size / 2;
-  const maxRadius = 300; // AUMENTADO de 280 para 300
+  const maxRadius = 220; // REDUZIDO de 300 para 220 para dar mais espaço aos labels
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -192,7 +192,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
   };
 
   return (
-    <div className="flex justify-center mb-8">
+    <div className="flex justify-center mb-8 py-8">
       <svg width={size} height={size} className="rounded-xl" style={{backgroundColor: '#1a2332'}}>
         {/* Grid circular */}
         {[...Array(levels)].map((_, i) => (
@@ -247,19 +247,19 @@ const RadarChart = ({ data, showPercentage = false }) => {
             key={i}
             cx={point.x}
             cy={point.y}
-            r="10" // AUMENTADO de 8 para 10
+            r="8" // REDUZIDO de 10 para 8 para melhor proporção
             fill="#d2bc8f"
             stroke="white"
-            strokeWidth="4" // AUMENTADO de 3 para 4
+            strokeWidth="3" // REDUZIDO de 4 para 3
           />
         ))}
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 180); // AUMENTADO de 140 para 180
+          const labelPoint = calculatePoint(angles[i], maxRadius + 250); // AUMENTADO de 180 para 250 - muito mais espaço
           const porcentagem = showPercentage ? data[i] : '';
           
-          // Quebrar o nome em linhas menores
+          // Quebrar o nome em linhas menores de forma mais inteligente
           const palavras = modulo.nome.split(' ');
           let linha1, linha2, linha3 = '';
           
@@ -270,6 +270,9 @@ const RadarChart = ({ data, showPercentage = false }) => {
             linha1 = palavras[0];
             linha2 = palavras[1];
             linha3 = palavras[2];
+          } else if (palavras.length === 4) {
+            linha1 = palavras.slice(0, 2).join(' ');
+            linha2 = palavras.slice(2, 4).join(' ');
           } else {
             linha1 = palavras.slice(0, 2).join(' ');
             linha2 = palavras.slice(2, 4).join(' ');
@@ -280,11 +283,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
             <g key={i}>
               <text
                 x={labelPoint.x}
-                y={labelPoint.y - 35} // AUMENTADO espaçamento de 25 para 35
+                y={labelPoint.y - 45} // AUMENTADO espaçamento de 35 para 45
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="white"
-                fontSize="18" // AUMENTADO de 14 para 18
+                fontSize="16" // REDUZIDO de 18 para 16 para melhor proporção
                 fontWeight="bold"
               >
                 {linha1}
@@ -292,11 +295,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha2 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y - 15} // AUMENTADO espaçamento
+                  y={labelPoint.y - 25} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="18" // AUMENTADO
+                  fontSize="16"
                   fontWeight="bold"
                 >
                   {linha2}
@@ -305,11 +308,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha3 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + 5} // AUMENTADO espaçamento
+                  y={labelPoint.y - 5} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="18" // AUMENTADO
+                  fontSize="16"
                   fontWeight="bold"
                 >
                   {linha3}
@@ -318,11 +321,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linha3 ? 45 : 35)} // AUMENTADO espaçamento para porcentagem
+                  y={labelPoint.y + (linha3 ? 25 : linha2 ? 15 : 5)} // AJUSTADO espaçamento dinâmico
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="20" // AUMENTADO de 16 para 20
+                  fontSize="18" // REDUZIDO de 20 para 18
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -333,11 +336,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
         })}
 
         {/* Legenda */}
-        <g transform={`translate(40, ${size - 120})`}>
-          <rect x="0" y="0" width="20" height="20" fill="#d2bc8f" />
-          <text x="28" y="16" fill="white" fontSize="16" fontWeight="bold">Resultado Atual</text>
-          <rect x="0" y="30" width="20" height="20" fill="#10b981" />
-          <text x="28" y="46" fill="white" fontSize="16" fontWeight="bold">Resultado Ideal</text>
+        <g transform={`translate(60, ${size - 150})`}>
+          <rect x="0" y="0" width="24" height="24" fill="#d2bc8f" />
+          <text x="32" y="18" fill="white" fontSize="18" fontWeight="bold">Resultado Atual</text>
+          <rect x="0" y="35" width="24" height="24" fill="#10b981" />
+          <text x="32" y="53" fill="white" fontSize="18" fontWeight="bold">Resultado Ideal</text>
         </g>
       </svg>
     </div>
@@ -491,10 +494,10 @@ export default function DiagnosticoCX() {
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4 flex items-center justify-center">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-6xl font-bold mb-6" style={{color: '#d2bc8f'}}>
+          <h1 className="text-5xl font-bold mb-6" style={{color: '#d2bc8f'}}>
             Diagnóstico Personalizado
           </h1>
-          <h2 className="text-3xl font-bold mb-8" style={{color: '#d2bc8f'}}>
+          <h2 className="text-2xl font-bold mb-8" style={{color: '#d2bc8f'}}>
             Código da Conversão Consciente
           </h2>
           
@@ -540,10 +543,10 @@ export default function DiagnosticoCX() {
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-6xl font-bold mb-8" style={{color: '#d2bc8f'}}>
+          <h1 className="text-5xl font-bold mb-8" style={{color: '#d2bc8f'}}>
             Olá, {nomeUsuario}! Sessão de Diagnóstico
           </h1>
-          <h2 className="text-4xl font-bold mb-12" style={{color: '#d2bc8f'}}>
+          <h2 className="text-3xl font-bold mb-12" style={{color: '#d2bc8f'}}>
             Código da Conversão Consciente
           </h2>
           
@@ -572,10 +575,10 @@ export default function DiagnosticoCX() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {MODULOS.map((modulo, idx) => (
-              <div key={idx} className="bg-[#1a2332] rounded-lg p-8" style={{border: '2px solid #d2bc8f'}}>
-                <div className="w-6 h-6 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
+              <div key={idx} className="bg-[#1a2332] rounded-lg p-6" style={{border: '2px solid #d2bc8f'}}>
+                <div className="w-5 h-5 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
                 <h3 className="font-bold text-[#d2bc8f] mb-3 text-2xl">{modulo.nome}</h3>
                 <p className="text-white text-lg">{modulo.explicacao}</p>
                 <div className="mt-4 text-[#d2bc8f] font-bold text-lg">
@@ -610,24 +613,24 @@ export default function DiagnosticoCX() {
             <h1 className="text-5xl font-bold mb-4" style={{color: '#d2bc8f'}}>
               Resultado do Diagnóstico CX
             </h1>
-            <div className="bg-[#1a2332] rounded-xl p-10 border-2 border-[#d2bc8f]">
-              <div className="text-7xl font-bold mb-4" style={{color: resultado.cor}}>
+            <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
+              <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
                 {resultado.porcentagem}%
               </div>
-              <div className="text-3xl font-semibold mb-2" style={{color: resultado.cor}}>
+              <div className="text-2xl font-semibold mb-2" style={{color: resultado.cor}}>
                 Nível: {resultado.nivel}
               </div>
-              <div className="text-xl text-white mb-4">
+              <div className="text-lg text-white mb-4">
                 {resultado.total} de {resultado.totalPossivel} pontos
               </div>
-              <p className="text-2xl text-white leading-relaxed">
+              <p className="text-xl text-white leading-relaxed">
                 {resultado.interpretacao}
               </p>
             </div>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-4xl font-bold text-center mb-8" style={{color: '#d2bc8f'}}>
+            <h2 className="text-3xl font-bold text-center mb-8" style={{color: '#d2bc8f'}}>
               Diagnóstico empresa atual vs empresa ideal de conversão
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
@@ -671,13 +674,13 @@ export default function DiagnosticoCX() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {MODULOS.map((modulo, idx) => {
               const resultadoModulo = resultadosModulo[idx];
               return (
-                <div key={idx} className="bg-[#1a2332] rounded-lg p-8 border-l-4" style={{borderLeftColor: modulo.cor}}>
+                <div key={idx} className="bg-[#1a2332] rounded-lg p-6 border-l-4" style={{borderLeftColor: modulo.cor}}>
                   <div className="flex items-center mb-3">
-                    <div className="w-6 h-6 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
+                    <div className="w-5 h-5 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
                     <h3 className="font-bold text-[#d2bc8f] text-lg">{modulo.nome}</h3>
                   </div>
                   <div className="text-4xl font-bold mb-2" style={{color: modulo.cor}}>
@@ -729,8 +732,8 @@ export default function DiagnosticoCX() {
           <p className="text-white mb-6 text-lg">{moduloInfo.explicacao}</p>
         </div>
 
-        <div className="bg-[#1a2332] rounded-xl p-10 mb-6" style={{border: '2px solid #d2bc8f'}}>
-          <h3 className="text-4xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
+        <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
+          <h3 className="text-3xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
             {perguntaInfo.pergunta}
           </h3>
 
@@ -753,7 +756,7 @@ export default function DiagnosticoCX() {
                 <button
                   key={i}
                   onClick={() => handleResposta(i)}
-                  className="hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-4 px-3 rounded-lg font-semibold transition-all duration-200 text-lg"
+                  className="hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-3 px-3 rounded-lg font-semibold transition-all duration-200 text-base"
                   style={{
                     backgroundColor: '#1a2332',
                     border: '2px solid #d2bc8f',
