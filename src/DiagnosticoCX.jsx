@@ -628,7 +628,7 @@ export default function DiagnosticoCX() {
 
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-[#d2bc8f] text-center mb-6">
-              📊 Radar de Diagnóstico vs Empresa Ideal
+              📊 Radar de Diagnóstico - Empresa atual vs Empresa Ideal
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
           </div>
