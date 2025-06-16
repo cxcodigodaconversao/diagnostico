@@ -491,15 +491,15 @@ export default function DiagnosticoCX() {
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4 flex items-center justify-center">
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-[#d2bc8f] mb-6">
+          <h1 className="text-4xl font-bold mb-6" style={{color: '#d2bc8f'}}>
             Diagnóstico Personalizado
           </h1>
-          <h2 className="text-2xl font-bold text-[#d2bc8f] mb-8">
+          <h2 className="text-2xl font-bold mb-8" style={{color: '#d2bc8f'}}>
             Código da Conversão Consciente
           </h2>
           
           <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
-            <p className="text-xl text-[#d2bc8f] font-bold mb-6">
+            <p className="text-xl font-bold mb-6" style={{color: '#d2bc8f'}}>
               Antes de começar, como posso me dirigir a você?
             </p>
             <input
@@ -540,10 +540,10 @@ export default function DiagnosticoCX() {
     return (
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-[#d2bc8f] mb-8">
+          <h1 className="text-5xl font-bold mb-8" style={{color: '#d2bc8f'}}>
             Olá, {nomeUsuario}! Sessão de Diagnóstico
           </h1>
-          <h2 className="text-3xl font-bold text-[#d2bc8f] mb-12">
+          <h2 className="text-3xl font-bold mb-12" style={{color: '#d2bc8f'}}>
             Código da Conversão Consciente
           </h2>
           
@@ -551,21 +551,21 @@ export default function DiagnosticoCX() {
             <div className="space-y-6 text-left max-w-3xl mx-auto">
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">1</span>
-                <p className="text-xl text-[#d2bc8f] font-bold">
+                <p className="text-xl font-bold" style={{color: '#d2bc8f'}}>
                   <strong>Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico</strong>
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">2</span>
-                <p className="text-xl text-[#d2bc8f] font-bold">
+                <p className="text-xl font-bold" style={{color: '#d2bc8f'}}>
                   <strong>A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal</strong>
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">3</span>
-                <p className="text-xl text-[#d2bc8f] font-bold">
+                <p className="text-xl font-bold" style={{color: '#d2bc8f'}}>
                   <strong>Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.</strong>
                 </p>
               </div>
@@ -576,9 +576,9 @@ export default function DiagnosticoCX() {
             {MODULOS.map((modulo, idx) => (
               <div key={idx} className="bg-[#1a2332] rounded-lg p-6" style={{border: '2px solid #d2bc8f'}}>
                 <div className="w-4 h-4 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
-                <h3 className="font-bold text-[#d2bc8f] mb-3 text-xl">{modulo.nome}</h3>
+                <h3 className="font-bold mb-3 text-xl" style={{color: '#d2bc8f'}}>{modulo.nome}</h3>
                 <p className="text-white text-sm">{modulo.explicacao}</p>
-                <div className="mt-4 text-[#d2bc8f] font-bold text-base">
+                <div className="mt-4 font-bold text-base" style={{color: '#d2bc8f'}}>
                   {modulo.perguntas.length} perguntas
                 </div>
               </div>
@@ -607,7 +607,7 @@ export default function DiagnosticoCX() {
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-[#d2bc8f] mb-4">
+            <h1 className="text-4xl font-bold mb-4" style={{color: '#d2bc8f'}}>
               Resultado do Diagnóstico CX
             </h1>
             <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
@@ -627,7 +627,7 @@ export default function DiagnosticoCX() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-[#d2bc8f] text-center mb-8">
+            <h2 className="text-3xl font-bold text-center mb-8" style={{color: '#d2bc8f'}}>
               Diagnóstico empresa atual vs empresa ideal de conversão
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
@@ -635,7 +635,7 @@ export default function DiagnosticoCX() {
 
           {/* Recomendações Personalizadas */}
           <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
-            <h2 className="text-2xl font-bold text-[#d2bc8f] mb-4">
+            <h2 className="text-2xl font-bold mb-4" style={{color: '#d2bc8f'}}>
               {recomendacoes.titulo}
             </h2>
             <p className="text-xl text-white mb-6 leading-relaxed">
@@ -643,7 +643,7 @@ export default function DiagnosticoCX() {
             </p>
             
             <div className="mb-6">
-              <h3 className="text-lg font-bold text-[#d2bc8f] mb-3">
+              <h3 className="text-lg font-bold mb-3" style={{color: '#d2bc8f'}}>
                 Pontos de Evolução Identificados:
               </h3>
               <div className="space-y-2">
@@ -678,7 +678,7 @@ export default function DiagnosticoCX() {
                 <div key={idx} className="bg-[#1a2332] rounded-lg p-6 border-l-4" style={{borderLeftColor: modulo.cor}}>
                   <div className="flex items-center mb-3">
                     <div className="w-4 h-4 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
-                    <h3 className="font-bold text-[#d2bc8f] text-base">{modulo.nome}</h3>
+                    <h3 className="font-bold text-base" style={{color: '#d2bc8f'}}>{modulo.nome}</h3>
                   </div>
                   <div className="text-3xl font-bold mb-2" style={{color: modulo.cor}}>
                     {resultadoModulo.porcentagem}%
@@ -702,7 +702,7 @@ export default function DiagnosticoCX() {
     <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#d2bc8f] mb-4">
+          <h1 className="text-3xl font-bold mb-4" style={{color: '#d2bc8f'}}>
             Diagnóstico CX – Código da Conversão
           </h1>
           <div className="bg-[#1a2332] rounded-full h-3 mb-4">
@@ -711,7 +711,7 @@ export default function DiagnosticoCX() {
               style={{width: `${progresso}%`}}
             ></div>
           </div>
-          <p className="text-[#d2bc8f] font-bold text-lg">
+          <p className="font-bold text-lg" style={{color: '#d2bc8f'}}>
             Pergunta {perguntaAtual + 1} de {totalPerguntas}
           </p>
         </div>
@@ -722,7 +722,7 @@ export default function DiagnosticoCX() {
               className="w-4 h-4 rounded-full mr-3"
               style={{backgroundColor: moduloInfo.cor}}
             ></div>
-            <h2 className="text-xl font-bold text-[#d2bc8f]">
+            <h2 className="text-xl font-bold" style={{color: '#d2bc8f'}}>
               {moduloInfo.nome}
             </h2>
           </div>
@@ -730,14 +730,14 @@ export default function DiagnosticoCX() {
         </div>
 
         <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
-          <h3 className="text-3xl font-bold mb-6 text-[#d2bc8f] leading-relaxed">
+          <h3 className="text-3xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
             {perguntaInfo.pergunta}
           </h3>
 
           {mostrarExplicacao && (
             <div className="bg-[#0c121c] rounded-lg p-4 mb-6 border border-[#d2bc8f]">
               <p className="text-white mb-3">
-                <strong className="text-[#d2bc8f] text-lg">Por que esta pergunta é importante:</strong><br/>
+                <strong className="text-lg" style={{color: '#d2bc8f'}}>Por que esta pergunta é importante:</strong><br/>
                 {perguntaInfo.explicacao}
               </p>
               <p className="text-white italic">
@@ -747,7 +747,7 @@ export default function DiagnosticoCX() {
           )}
 
           <div className="space-y-3">
-            <p className="text-[#d2bc8f] font-bold text-lg mb-4">Avalie de 0 (nunca) a 10 (sempre):</p>
+            <p className="font-bold text-lg mb-4" style={{color: '#d2bc8f'}}>Avalie de 0 (nunca) a 10 (sempre):</p>
             <div className="grid grid-cols-11 gap-2">
               {[...Array(11)].map((_, i) => (
                 <button
