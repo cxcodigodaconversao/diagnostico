@@ -165,11 +165,11 @@ const MODULOS = [
   }
 ];
 
-// Componente Radar SVG
+// Componente Radar SVG AMPLIADO
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 600;
+  const size = 800; // AUMENTADO de 600 para 800
   const center = size / 2;
-  const maxRadius = 160;
+  const maxRadius = 280; // AUMENTADO de 160 para 280
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -230,7 +230,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(idealPoints)}
           fill="rgba(16, 185, 129, 0.1)"
           stroke="#10b981"
-          strokeWidth="2"
+          strokeWidth="3" // AUMENTADO
         />
 
         {/* Polígono atual (dourado) */}
@@ -238,7 +238,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(actualPoints)}
           fill="rgba(210, 188, 143, 0.3)"
           stroke="#d2bc8f"
-          strokeWidth="3"
+          strokeWidth="4" // AUMENTADO
         />
 
         {/* Pontos do resultado atual */}
@@ -247,16 +247,16 @@ const RadarChart = ({ data, showPercentage = false }) => {
             key={i}
             cx={point.x}
             cy={point.y}
-            r="6"
+            r="8" // AUMENTADO de 6 para 8
             fill="#d2bc8f"
             stroke="white"
-            strokeWidth="2"
+            strokeWidth="3" // AUMENTADO
           />
         ))}
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 80);
+          const labelPoint = calculatePoint(angles[i], maxRadius + 120); // AUMENTADO espaçamento
           const porcentagem = showPercentage ? data[i] : '';
           
           // Quebrar o nome em linhas menores
@@ -280,11 +280,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
             <g key={i}>
               <text
                 x={labelPoint.x}
-                y={labelPoint.y - 15}
+                y={labelPoint.y - 20} // AUMENTADO espaçamento
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="white"
-                fontSize="10"
+                fontSize="14" // AUMENTADO de 10 para 14
                 fontWeight="bold"
               >
                 {linha1}
@@ -292,11 +292,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha2 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y - 3}
+                  y={labelPoint.y - 5} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="10"
+                  fontSize="14" // AUMENTADO
                   fontWeight="bold"
                 >
                   {linha2}
@@ -305,11 +305,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha3 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + 9}
+                  y={labelPoint.y + 10} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="10"
+                  fontSize="14" // AUMENTADO
                   fontWeight="bold"
                 >
                   {linha3}
@@ -318,11 +318,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linha3 ? 25 : 15)}
+                  y={labelPoint.y + (linha3 ? 30 : 20)} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="12"
+                  fontSize="16" // AUMENTADO de 12 para 16
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -333,11 +333,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
         })}
 
         {/* Legenda */}
-        <g transform={`translate(20, ${size - 60})`}>
-          <rect x="0" y="0" width="12" height="12" fill="#d2bc8f" />
-          <text x="18" y="10" fill="white" fontSize="11">Resultado Atual</text>
-          <rect x="0" y="18" width="12" height="12" fill="#10b981" />
-          <text x="18" y="28" fill="white" fontSize="11">Resultado Ideal</text>
+        <g transform={`translate(30, ${size - 80})`}>
+          <rect x="0" y="0" width="16" height="16" fill="#d2bc8f" />
+          <text x="22" y="12" fill="white" fontSize="14" fontWeight="bold">Resultado Atual</text>
+          <rect x="0" y="25" width="16" height="16" fill="#10b981" />
+          <text x="22" y="37" fill="white" fontSize="14" fontWeight="bold">Resultado Ideal</text>
         </g>
       </svg>
     </div>
@@ -627,8 +627,8 @@ export default function DiagnosticoCX() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-[#d2bc8f] text-center mb-6">
-              📊 Radar de Diagnóstico vs Empresa Ideal
+            <h2 className="text-3xl font-bold text-[#d2bc8f] text-center mb-8">
+              📊 Diagnóstico empresa atual vs empresa ideal de conversão
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
           </div>
