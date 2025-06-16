@@ -165,11 +165,11 @@ const MODULOS = [
   }
 ];
 
-// Componente Radar SVG
+// Componente Radar SVG AMPLIADO
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 600;
+  const size = 800; // AUMENTADO de 600 para 800
   const center = size / 2;
-  const maxRadius = 160;
+  const maxRadius = 280; // AUMENTADO de 160 para 280
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -230,7 +230,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(idealPoints)}
           fill="rgba(16, 185, 129, 0.1)"
           stroke="#10b981"
-          strokeWidth="2"
+          strokeWidth="3" // AUMENTADO
         />
 
         {/* Polígono atual (dourado) */}
@@ -238,7 +238,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(actualPoints)}
           fill="rgba(210, 188, 143, 0.3)"
           stroke="#d2bc8f"
-          strokeWidth="3"
+          strokeWidth="4" // AUMENTADO
         />
 
         {/* Pontos do resultado atual */}
@@ -247,82 +247,58 @@ const RadarChart = ({ data, showPercentage = false }) => {
             key={i}
             cx={point.x}
             cy={point.y}
-            r="6"
+            r="8" // AUMENTADO de 6 para 8
             fill="#d2bc8f"
             stroke="white"
-            strokeWidth="2"
+            strokeWidth="3" // AUMENTADO
           />
         ))}
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 80);
+          const labelPoint = calculatePoint(angles[i], maxRadius + 100); // AUMENTADO espaçamento
           const porcentagem = showPercentage ? data[i] : '';
           
           // Quebrar o nome em linhas menores
           const palavras = modulo.nome.split(' ');
-          let linha1, linha2, linha3 = '';
+          let linhas = [];
           
           if (palavras.length <= 2) {
-            linha1 = palavras[0] || '';
-            linha2 = palavras[1] || '';
+            linhas = palavras.length === 1 ? [palavras[0]] : [palavras[0], palavras.slice(1).join(' ')];
           } else if (palavras.length === 3) {
-            linha1 = palavras[0];
-            linha2 = palavras[1];
-            linha3 = palavras[2];
+            linhas = [palavras[0], palavras[1], palavras[2]];
           } else {
-            linha1 = palavras.slice(0, 2).join(' ');
-            linha2 = palavras.slice(2, 4).join(' ');
-            linha3 = palavras.slice(4).join(' ');
+            const meio = Math.ceil(palavras.length / 2);
+            linhas = [
+              palavras.slice(0, meio).join(' '),
+              palavras.slice(meio).join(' ')
+            ];
           }
           
           return (
             <g key={i}>
-              <text
-                x={labelPoint.x}
-                y={labelPoint.y - 15}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="white"
-                fontSize="10"
-                fontWeight="bold"
-              >
-                {linha1}
-              </text>
-              {linha2 && (
+              {linhas.map((linha, lineIndex) => (
                 <text
+                  key={lineIndex}
                   x={labelPoint.x}
-                  y={labelPoint.y - 3}
+                  y={labelPoint.y + (lineIndex * 18) - ((linhas.length - 1) * 9)} // AUMENTADO espaçamento
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="10"
+                  fontSize="14" // AUMENTADO de 10 para 14
                   fontWeight="bold"
                 >
-                  {linha2}
+                  {linha}
                 </text>
-              )}
-              {linha3 && (
-                <text
-                  x={labelPoint.x}
-                  y={labelPoint.y + 9}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill="white"
-                  fontSize="10"
-                  fontWeight="bold"
-                >
-                  {linha3}
-                </text>
-              )}
+              ))}
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linha3 ? 25 : 15)}
+                  y={labelPoint.y + (linhas.length * 18) + 6}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="12"
+                  fontSize="16" // AUMENTADO de 12 para 16
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -333,11 +309,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
         })}
 
         {/* Legenda */}
-        <g transform={`translate(20, ${size - 60})`}>
-          <rect x="0" y="0" width="12" height="12" fill="#d2bc8f" />
-          <text x="18" y="10" fill="white" fontSize="11">Resultado Atual</text>
-          <rect x="0" y="18" width="12" height="12" fill="#10b981" />
-          <text x="18" y="28" fill="white" fontSize="11">Resultado Ideal</text>
+        <g transform={`translate(40, ${size - 100})`}>
+          <rect x="0" y="0" width="18" height="18" fill="#d2bc8f" />
+          <text x="24" y="14" fill="white" fontSize="14" fontWeight="bold">Resultado Atual</text>
+          <rect x="0" y="28" width="18" height="18" fill="#10b981" />
+          <text x="24" y="42" fill="white" fontSize="14" fontWeight="bold">Resultado Ideal</text>
         </g>
       </svg>
     </div>
@@ -607,170 +583,4 @@ export default function DiagnosticoCX() {
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-[#d2bc8f] mb-4">
-              🎯 Resultado do Diagnóstico CX
-            </h1>
-            <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
-              <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
-                {resultado.porcentagem}%
-              </div>
-              <div className="text-2xl font-semibold mb-2" style={{color: resultado.cor}}>
-                Nível: {resultado.nivel}
-              </div>
-              <div className="text-lg text-white mb-4">
-                {resultado.total} de {resultado.totalPossivel} pontos
-              </div>
-              <p className="text-xl text-white leading-relaxed">
-                {resultado.interpretacao}
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-[#d2bc8f] text-center mb-6">
-              📊 Radar de Diagnóstico - Empresa atual vs Empresa Ideal
-            </h2>
-            <RadarChart data={dadosRadar} showPercentage={true} />
-          </div>
-
-          {/* Recomendações Personalizadas */}
-          <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
-            <h2 className="text-2xl font-bold text-[#d2bc8f] mb-4">
-              {recomendacoes.titulo}
-            </h2>
-            <p className="text-xl text-white mb-6 leading-relaxed">
-              {recomendacoes.mensagem}
-            </p>
-            
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-[#d2bc8f] mb-3">
-                📈 Pontos de Evolução Identificados:
-              </h3>
-              <div className="space-y-2">
-                {recomendacoes.pontosEvolucao.map((ponto, idx) => (
-                  <p key={idx} className="text-white" dangerouslySetInnerHTML={{__html: ponto}} />
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-[#0c121c] rounded-lg p-6 border border-[#d2bc8f]">
-              <p className="text-xl text-white font-semibold text-center mb-4">
-                {recomendacoes.cta}
-              </p>
-              <div className="text-center">
-                <button className="bg-[#d2bc8f] text-[#0c121c] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#e6d0a3] transition-colors mr-4">
-                  🚀 Quero Conhecer o Método Completo
-                </button>
-                <button
-                  onClick={reiniciar}
-                  className="bg-gray-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors"
-                >
-                  Refazer Diagnóstico
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {MODULOS.map((modulo, idx) => {
-              const resultadoModulo = resultadosModulo[idx];
-              return (
-                <div key={idx} className="bg-[#1a2332] rounded-lg p-6 border-l-4" style={{borderLeftColor: modulo.cor}}>
-                  <div className="flex items-center mb-3">
-                    <div className="w-4 h-4 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
-                    <h3 className="font-semibold text-[#d2bc8f] text-sm">{modulo.nome}</h3>
-                  </div>
-                  <div className="text-3xl font-bold mb-2" style={{color: modulo.cor}}>
-                    {resultadoModulo.porcentagem}%
-                  </div>
-                  <div className="text-sm text-white">
-                    {resultadoModulo.pontuacao}/{resultadoModulo.maxPontos} pontos
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Tela das perguntas
-  const progresso = (perguntaAtual / totalPerguntas) * 100;
-
-  return (
-    <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#d2bc8f] mb-4">
-            📊 Diagnóstico CX – Código da Conversão
-          </h1>
-          <div className="bg-[#1a2332] rounded-full h-3 mb-4">
-            <div 
-              className="bg-[#d2bc8f] h-3 rounded-full transition-all duration-500"
-              style={{width: `${progresso}%`}}
-            ></div>
-          </div>
-          <p className="text-white">
-            Pergunta {perguntaAtual + 1} de {totalPerguntas}
-          </p>
-        </div>
-
-        <div className="mb-6">
-          <div className="flex items-center mb-4">
-            <div 
-              className="w-4 h-4 rounded-full mr-3"
-              style={{backgroundColor: moduloInfo.cor}}
-            ></div>
-            <h2 className="text-xl font-semibold text-[#d2bc8f]">
-              {moduloInfo.nome}
-            </h2>
-          </div>
-          <p className="text-white mb-6">{moduloInfo.explicacao}</p>
-        </div>
-
-        <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
-          <h3 className="text-2xl font-semibold mb-6 text-white leading-relaxed">
-            {perguntaInfo.pergunta}
-          </h3>
-
-          {mostrarExplicacao && (
-            <div className="bg-[#0c121c] rounded-lg p-4 mb-6 border border-[#d2bc8f]">
-              <p className="text-white mb-3">
-                <strong className="text-[#d2bc8f]">Por que esta pergunta é importante:</strong><br/>
-                {perguntaInfo.explicacao}
-              </p>
-              <p className="text-white italic">
-                💡 {perguntaInfo.dica}
-              </p>
-            </div>
-          )}
-
-          <div className="space-y-3">
-            <p className="text-white mb-4">Avalie de 0 (nunca) a 10 (sempre):</p>
-            <div className="grid grid-cols-11 gap-2">
-              {[...Array(11)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleResposta(i)}
-                  className="hover:bg-[#d2bc8f] hover:text-[#0c121c] text-white py-3 px-2 rounded-lg font-semibold transition-all duration-200 text-sm"
-                  style={{
-                    backgroundColor: '#1a2332',
-                    border: '2px solid #d2bc8f',
-                    color: '#0c121c'
-                  }}
-                >
-                  {i}
-                </button>
-              ))}
-            </div>
-            <div className="flex justify-between text-xs text-white mt-2">
-              <span>Nunca</span>
-              <span>Sempre</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+            <h
