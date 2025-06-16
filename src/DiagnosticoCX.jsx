@@ -165,11 +165,11 @@ const MODULOS = [
   }
 ];
 
-// Componente Radar SVG AMPLIADO
+// Componente Radar SVG
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 800;
+  const size = 600;
   const center = size / 2;
-  const maxRadius = 280;
+  const maxRadius = 160;
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -230,7 +230,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(idealPoints)}
           fill="rgba(16, 185, 129, 0.1)"
           stroke="#10b981"
-          strokeWidth="3"
+          strokeWidth="2"
         />
 
         {/* Polígono atual (dourado) */}
@@ -238,7 +238,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(actualPoints)}
           fill="rgba(210, 188, 143, 0.3)"
           stroke="#d2bc8f"
-          strokeWidth="4"
+          strokeWidth="3"
         />
 
         {/* Pontos do resultado atual */}
@@ -247,58 +247,82 @@ const RadarChart = ({ data, showPercentage = false }) => {
             key={i}
             cx={point.x}
             cy={point.y}
-            r="8"
+            r="6"
             fill="#d2bc8f"
             stroke="white"
-            strokeWidth="3"
+            strokeWidth="2"
           />
         ))}
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 100);
+          const labelPoint = calculatePoint(angles[i], maxRadius + 80);
           const porcentagem = showPercentage ? data[i] : '';
           
           // Quebrar o nome em linhas menores
           const palavras = modulo.nome.split(' ');
-          let linhas = [];
+          let linha1, linha2, linha3 = '';
           
           if (palavras.length <= 2) {
-            linhas = palavras.length === 1 ? [palavras[0]] : [palavras[0], palavras.slice(1).join(' ')];
+            linha1 = palavras[0] || '';
+            linha2 = palavras[1] || '';
           } else if (palavras.length === 3) {
-            linhas = [palavras[0], palavras[1], palavras[2]];
+            linha1 = palavras[0];
+            linha2 = palavras[1];
+            linha3 = palavras[2];
           } else {
-            const meio = Math.ceil(palavras.length / 2);
-            linhas = [
-              palavras.slice(0, meio).join(' '),
-              palavras.slice(meio).join(' ')
-            ];
+            linha1 = palavras.slice(0, 2).join(' ');
+            linha2 = palavras.slice(2, 4).join(' ');
+            linha3 = palavras.slice(4).join(' ');
           }
           
           return (
             <g key={i}>
-              {linhas.map((linha, lineIndex) => (
+              <text
+                x={labelPoint.x}
+                y={labelPoint.y - 15}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="white"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                {linha1}
+              </text>
+              {linha2 && (
                 <text
-                  key={lineIndex}
                   x={labelPoint.x}
-                  y={labelPoint.y + (lineIndex * 18) - ((linhas.length - 1) * 9)}
+                  y={labelPoint.y - 3}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
-                  fontSize="14"
+                  fontSize="10"
                   fontWeight="bold"
                 >
-                  {linha}
+                  {linha2}
                 </text>
-              ))}
+              )}
+              {linha3 && (
+                <text
+                  x={labelPoint.x}
+                  y={labelPoint.y + 9}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontWeight="bold"
+                >
+                  {linha3}
+                </text>
+              )}
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linhas.length * 18) + 6}
+                  y={labelPoint.y + (linha3 ? 25 : 15)}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="16"
+                  fontSize="12"
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -309,11 +333,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
         })}
 
         {/* Legenda */}
-        <g transform={`translate(40, ${size - 100})`}>
-          <rect x="0" y="0" width="18" height="18" fill="#d2bc8f" />
-          <text x="24" y="14" fill="white" fontSize="14" fontWeight="bold">Resultado Atual</text>
-          <rect x="0" y="28" width="18" height="18" fill="#10b981" />
-          <text x="24" y="42" fill="white" fontSize="14" fontWeight="bold">Resultado Ideal</text>
+        <g transform={`translate(20, ${size - 60})`}>
+          <rect x="0" y="0" width="12" height="12" fill="#d2bc8f" />
+          <text x="18" y="10" fill="white" fontSize="11">Resultado Atual</text>
+          <rect x="0" y="18" width="12" height="12" fill="#10b981" />
+          <text x="18" y="28" fill="white" fontSize="11">Resultado Ideal</text>
         </g>
       </svg>
     </div>
@@ -525,6 +549,71 @@ export default function DiagnosticoCX() {
           
           <div className="bg-[#1a2332] rounded-xl p-8 mb-8 border border-[#d2bc8f]">
             <div className="space-y-6 text-left max-w-3xl mx-auto">
+              <div className="flex items-start space-x-4">
+                <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">1</span>
+                <p className="text-xl text-white">
+                  <strong>Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico</strong>
+                </p>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">2</span>
+                <p className="text-xl text-white">
+                  <strong>A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal</strong>
+                </p>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">3</span>
+                <p className="text-xl text-white">
+                  <strong>Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {MODULOS.map((modulo, idx) => (
+              <div key={idx} className="bg-[#1a2332] rounded-lg p-6" style={{border: '2px solid #d2bc8f'}}>
+                <div className="w-4 h-4 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
+                <h3 className="font-bold text-[#d2bc8f] mb-3 text-lg">{modulo.nome}</h3>
+                <p className="text-white text-sm">{modulo.explicacao}</p>
+                <div className="mt-4 text-[#d2bc8f] font-semibold">
+                  {modulo.perguntas.length} perguntas
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setIniciado(true)}
+            className="bg-[#d2bc8f] text-[#0c121c] px-12 py-4 rounded-xl font-bold text-xl hover:bg-[#e6d0a3] transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            Iniciar Diagnóstico
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Tela de resultado
+  if (finalizado) {
+    const resultado = calcularResultados();
+    const resultadosModulo = calcularResultadosModulo();
+    const dadosRadar = resultadosModulo.map(r => r.porcentagem);
+    const recomendacoes = gerarRecomendacoesPersonalizadas(resultado.porcentagem, resultadosModulo);
+
+    return (
+      <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-[#d2bc8f] mb-4">
+              🎯 Resultado do Diagnóstico CX
+            </h1>
+            <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
+              <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
+                {resultado.porcentagem}%
+              </div>
               <div className="text-2xl font-semibold mb-2" style={{color: resultado.cor}}>
                 Nível: {resultado.nivel}
               </div>
@@ -538,8 +627,8 @@ export default function DiagnosticoCX() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-[#d2bc8f] text-center mb-8">
-              📊 Diagnóstico empresa atual vs empresa ideal de conversão
+            <h2 className="text-2xl font-bold text-[#d2bc8f] text-center mb-6">
+              📊 Radar de Diagnóstico vs Empresa Ideal
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
           </div>
@@ -684,69 +773,4 @@ export default function DiagnosticoCX() {
       </div>
     </div>
   );
-}="flex items-start space-x-4">
-                <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">1</span>
-                <p className="text-xl text-white">
-                  <strong>Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico</strong>
-                </p>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">2</span>
-                <p className="text-xl text-white">
-                  <strong>A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal</strong>
-                </p>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">3</span>
-                <p className="text-xl text-white">
-                  <strong>Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.</strong>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {MODULOS.map((modulo, idx) => (
-              <div key={idx} className="bg-[#1a2332] rounded-lg p-6" style={{border: '2px solid #d2bc8f'}}>
-                <div className="w-4 h-4 rounded-full mx-auto mb-4" style={{backgroundColor: modulo.cor}}></div>
-                <h3 className="font-bold text-[#d2bc8f] mb-3 text-lg">{modulo.nome}</h3>
-                <p className="text-white text-sm">{modulo.explicacao}</p>
-                <div className="mt-4 text-[#d2bc8f] font-semibold">
-                  {modulo.perguntas.length} perguntas
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <button
-            onClick={() => setIniciado(true)}
-            className="bg-[#d2bc8f] text-[#0c121c] px-12 py-4 rounded-xl font-bold text-xl hover:bg-[#e6d0a3] transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
-            Iniciar Diagnóstico
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Tela de resultado
-  if (finalizado) {
-    const resultado = calcularResultados();
-    const resultadosModulo = calcularResultadosModulo();
-    const dadosRadar = resultadosModulo.map(r => r.porcentagem);
-    const recomendacoes = gerarRecomendacoesPersonalizadas(resultado.porcentagem, resultadosModulo);
-
-    return (
-      <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-[#d2bc8f] mb-4">
-              🎯 Resultado do Diagnóstico CX
-            </h1>
-            <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
-              <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
-                {resultado.porcentagem}%
-              </div>
-              <div className
+}
