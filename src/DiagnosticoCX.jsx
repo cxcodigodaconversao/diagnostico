@@ -555,30 +555,21 @@ export default function DiagnosticoCX() {
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">1</span>
                 <p className="text-2xl text-white">
-                  <strong className="flex items-center">
-                    <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg mr-4">1</span>
-                    Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico
-                  </strong>
+                  <strong>Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico</strong>
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">2</span>
                 <p className="text-2xl text-white">
-                  <strong className="flex items-center">
-                    <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg mr-4">2</span>
-                    A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal
-                  </strong>
+                  <strong>A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal</strong>
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">3</span>
                 <p className="text-2xl text-white">
-                  <strong className="flex items-center">
-                    <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg mr-4">3</span>
-                    Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.
-                  </strong>
+                  <strong>Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.</strong>
                 </p>
               </div>
             </div>
@@ -755,22 +746,14 @@ export default function DiagnosticoCX() {
         </div>
 
         <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
-          <h3 className="text-3xl font-bold mb-6 leading-relaxed flex items-center" style={{color: '#d2bc8f'}}>
-            <div 
-              className="w-6 h-6 rounded-full mr-4 flex-shrink-0"
-              style={{backgroundColor: moduloInfo.cor}}
-            ></div>
+          <h3 className="text-3xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
             <strong>{perguntaInfo.pergunta}</strong>
           </h3>
 
           {mostrarExplicacao && (
             <div className="bg-[#0c121c] rounded-lg p-6 mb-6 border border-[#d2bc8f]">
               <p className="text-white mb-3 text-lg">
-                <strong className="text-[#d2bc8f] text-xl flex items-center">
-                  <div 
-                    className="w-4 h-4 rounded-full mr-2"
-                    style={{backgroundColor: moduloInfo.cor}}
-                  ></div>
+                <strong className="text-[#d2bc8f] text-xl">
                   Por que esta pergunta é importante:
                 </strong><br/>
                 {perguntaInfo.explicacao}
@@ -782,11 +765,7 @@ export default function DiagnosticoCX() {
           )}
 
           <div className="space-y-3">
-            <p className="text-white font-bold text-xl mb-4 flex items-center">
-              <div 
-                className="w-4 h-4 rounded-full mr-2"
-                style={{backgroundColor: moduloInfo.cor}}
-              ></div>
+            <p className="text-white font-bold text-xl mb-4">
               <strong>Avalie de 0 (nunca) a 10 (sempre):</strong>
             </p>
             <div className="grid grid-cols-11 gap-2">
