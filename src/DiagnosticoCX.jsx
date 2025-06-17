@@ -167,9 +167,9 @@ const MODULOS = [
 
 // Componente Radar SVG AMPLIADO
 const RadarChart = ({ data, showPercentage = false }) => {
-  const size = 1200; // AUMENTADO de 1000 para 1200 para muito mais espaço
+  const size = 1200;
   const center = size / 2;
-  const maxRadius = 220; // REDUZIDO de 300 para 220 para dar mais espaço aos labels
+  const maxRadius = 220;
   const levels = 5;
   
   const calculatePoint = (angle, radius) => {
@@ -203,7 +203,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
             r={(maxRadius * (i + 1)) / levels}
             fill="none"
             stroke="#666"
-            strokeWidth="2" // AUMENTADO de 1 para 2
+            strokeWidth="2"
             opacity="0.3"
           />
         ))}
@@ -219,7 +219,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
               x2={endPoint.x}
               y2={endPoint.y}
               stroke="#666"
-              strokeWidth="2" // AUMENTADO de 1 para 2
+              strokeWidth="2"
               opacity="0.3"
             />
           );
@@ -230,7 +230,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(idealPoints)}
           fill="rgba(16, 185, 129, 0.1)"
           stroke="#10b981"
-          strokeWidth="4" // AUMENTADO de 3 para 4
+          strokeWidth="4"
         />
 
         {/* Polígono atual (dourado) */}
@@ -238,7 +238,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
           d={createPath(actualPoints)}
           fill="rgba(210, 188, 143, 0.3)"
           stroke="#d2bc8f"
-          strokeWidth="5" // AUMENTADO de 4 para 5
+          strokeWidth="5"
         />
 
         {/* Pontos do resultado atual */}
@@ -247,16 +247,16 @@ const RadarChart = ({ data, showPercentage = false }) => {
             key={i}
             cx={point.x}
             cy={point.y}
-            r="8" // REDUZIDO de 10 para 8 para melhor proporção
+            r="8"
             fill="#d2bc8f"
             stroke="white"
-            strokeWidth="3" // REDUZIDO de 4 para 3
+            strokeWidth="3"
           />
         ))}
 
         {/* Labels dos módulos com nome completo e porcentagem */}
         {MODULOS.map((modulo, i) => {
-          const labelPoint = calculatePoint(angles[i], maxRadius + 250); // AUMENTADO de 180 para 250 - muito mais espaço
+          const labelPoint = calculatePoint(angles[i], maxRadius + 250);
           const porcentagem = showPercentage ? data[i] : '';
           
           // Quebrar o nome em linhas menores de forma mais inteligente
@@ -283,11 +283,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
             <g key={i}>
               <text
                 x={labelPoint.x}
-                y={labelPoint.y - 45} // AUMENTADO espaçamento de 35 para 45
+                y={labelPoint.y - 45}
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="white"
-                fontSize="16" // REDUZIDO de 18 para 16 para melhor proporção
+                fontSize="16"
                 fontWeight="bold"
               >
                 {linha1}
@@ -295,7 +295,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha2 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y - 25} // AUMENTADO espaçamento
+                  y={labelPoint.y - 25}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
@@ -308,7 +308,7 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {linha3 && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y - 5} // AUMENTADO espaçamento
+                  y={labelPoint.y - 5}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="white"
@@ -321,11 +321,11 @@ const RadarChart = ({ data, showPercentage = false }) => {
               {showPercentage && (
                 <text
                   x={labelPoint.x}
-                  y={labelPoint.y + (linha3 ? 25 : linha2 ? 15 : 5)} // AJUSTADO espaçamento dinâmico
+                  y={labelPoint.y + (linha3 ? 25 : linha2 ? 15 : 5)}
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#d2bc8f"
-                  fontSize="18" // REDUZIDO de 20 para 18
+                  fontSize="18"
                   fontWeight="bold"
                 >
                   {porcentagem}%
@@ -428,12 +428,13 @@ export default function DiagnosticoCX() {
           .map((resultado, idx) => ({
             modulo: MODULOS[idx].nome,
             porcentagem: resultado.porcentagem,
-            gap: 100 - resultado.porcentagem
+            gap: 100 - resultado.porcentagem,
+            cor: MODULOS[idx].cor
           }))
           .filter(item => item.gap > 0)
           .sort((a, b) => b.gap - a.gap)
           .slice(0, 3)
-          .map(item => `• **${item.modulo}**: Potencial de +${item.gap}% de otimização para resultados exponenciais`),
+          .map(item => `• <span style="color: ${item.cor}; font-size: 20px;">●</span> ${item.modulo}: Potencial de +${item.gap}% de otimização para resultados exponenciais`),
         cta: `${nomeUsuario}, você está pronto para o CÓDIGO DA CONVERSÃO COMPLETO. Quer descobrir os 3 segredos que separam quem vende bem de quem vende TODOS OS DIAS?`
       };
     } else if (porcentagem >= 70) {
@@ -444,11 +445,12 @@ export default function DiagnosticoCX() {
           .map((resultado, idx) => ({
             modulo: MODULOS[idx].nome,
             porcentagem: resultado.porcentagem,
-            gap: 100 - resultado.porcentagem
+            gap: 100 - resultado.porcentagem,
+            cor: MODULOS[idx].cor
           }))
           .filter(item => item.gap > 20)
           .sort((a, b) => b.gap - a.gap)
-          .map(item => `• **${item.modulo}**: ${item.gap}% de gap - isso pode estar custando até 50% das suas vendas`),
+          .map(item => `• <span style="color: ${item.cor}; font-size: 20px;">●</span> ${item.modulo}: ${item.gap}% de gap - isso pode estar custando até 50% das suas vendas`),
         cta: `${nomeUsuario}, quer transformar esses gaps em faturamento? Te mostro como fechar essas lacunas em semanas, não meses.`
       };
     } else {
@@ -495,15 +497,15 @@ export default function DiagnosticoCX() {
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4 flex items-center justify-center">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6" style={{color: '#d2bc8f'}}>
-            <strong>Diagnóstico Personalizado</strong>
+            Diagnóstico Personalizado
           </h1>
           <h2 className="text-2xl font-bold mb-8" style={{color: '#d2bc8f'}}>
-            <strong>Código da Conversão Consciente</strong>
+            Código da Conversão Consciente
           </h2>
           
           <div className="bg-[#1a2332] rounded-xl p-10 mb-8 border border-[#d2bc8f]">
             <p className="text-2xl text-white font-bold mb-6">
-              <strong>Antes de começar, como posso me dirigir a você?</strong>
+              Antes de começar, como posso me dirigir a você?
             </p>
             <input
               type="text"
@@ -544,10 +546,10 @@ export default function DiagnosticoCX() {
       <div className="bg-[#0c121c] text-white min-h-screen py-10 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-8" style={{color: '#d2bc8f'}}>
-            <strong>Olá, {nomeUsuario}! Sessão de Diagnóstico</strong>
+            Olá, {nomeUsuario}! Sessão de Diagnóstico
           </h1>
           <h2 className="text-3xl font-bold mb-12" style={{color: '#d2bc8f'}}>
-            <strong>Código da Conversão Consciente</strong>
+            Código da Conversão Consciente
           </h2>
           
           <div className="bg-[#1a2332] rounded-xl p-10 mb-8 border border-[#d2bc8f]">
@@ -555,21 +557,21 @@ export default function DiagnosticoCX() {
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">1</span>
                 <p className="text-2xl text-white">
-                  <strong>Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico</strong>
+                  Atribua uma nota de 0 a 10 de acordo com nível de qualidade de cada subtópico
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">2</span>
                 <p className="text-2xl text-white">
-                  <strong>A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal</strong>
+                  A avaliação será concluída abaixo mostrando o resultado final em percentual de 0% a 100% de cada tópico principal
                 </p>
               </div>
               
               <div className="flex items-start space-x-4">
                 <span className="bg-[#d2bc8f] text-[#0c121c] rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">3</span>
                 <p className="text-2xl text-white">
-                  <strong>Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.</strong>
+                  Ao final haverá um panorama geral de todos os tópicos, um diagnóstico geral.
                 </p>
               </div>
             </div>
@@ -582,7 +584,7 @@ export default function DiagnosticoCX() {
                   <div className="w-6 h-6 rounded-full" style={{backgroundColor: modulo.cor}}></div>
                 </div>
                 <h3 className="font-bold text-[#d2bc8f] mb-3 text-2xl text-center">
-                  <strong>{modulo.nome}</strong>
+                  {modulo.nome}
                 </h3>
                 <p className="text-white text-lg text-center">{modulo.explicacao}</p>
                 <div className="mt-4 text-[#d2bc8f] font-bold text-lg text-center">
@@ -618,7 +620,7 @@ export default function DiagnosticoCX() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-5xl font-bold mb-4" style={{color: '#d2bc8f'}}>
-              <strong>Resultado do Diagnóstico CX</strong>
+              Resultado do Diagnóstico CX
             </h1>
             <div className="bg-[#1a2332] rounded-xl p-8 border-2 border-[#d2bc8f]">
               <div className="text-6xl font-bold mb-4" style={{color: resultado.cor}}>
@@ -638,7 +640,7 @@ export default function DiagnosticoCX() {
 
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-center mb-8" style={{color: '#d2bc8f'}}>
-              <strong>Diagnóstico empresa atual vs empresa ideal de conversão</strong>
+              Diagnóstico empresa atual vs empresa ideal de conversão
             </h2>
             <RadarChart data={dadosRadar} showPercentage={true} />
           </div>
@@ -646,7 +648,7 @@ export default function DiagnosticoCX() {
           {/* Recomendações Personalizadas */}
           <div className="bg-[#1a2332] rounded-xl p-10 mb-8 border border-[#d2bc8f]">
             <h2 className="text-3xl font-bold mb-4" style={{color: '#d2bc8f'}}>
-              <strong>{recomendacoes.titulo}</strong>
+              {recomendacoes.titulo}
             </h2>
             <p className="text-2xl text-white mb-6 leading-relaxed">
               {recomendacoes.mensagem}
@@ -658,7 +660,7 @@ export default function DiagnosticoCX() {
                   className="w-4 h-4 rounded-full mr-2"
                   style={{backgroundColor: '#d2bc8f'}}
                 ></div>
-                <strong>Pontos de Evolução Identificados:</strong>
+                Pontos de Evolução Identificados:
               </h3>
               <div className="space-y-2">
                 {recomendacoes.pontosEvolucao.map((ponto, idx) => (
@@ -693,7 +695,7 @@ export default function DiagnosticoCX() {
                   <div className="flex items-center mb-3">
                     <div className="w-6 h-6 rounded-full mr-3" style={{backgroundColor: modulo.cor}}></div>
                     <h3 className="font-bold text-[#d2bc8f] text-lg">
-                      <strong>{modulo.nome}</strong>
+                      {modulo.nome}
                     </h3>
                   </div>
                   <div className="text-4xl font-bold mb-2" style={{color: modulo.cor}}>
@@ -719,7 +721,7 @@ export default function DiagnosticoCX() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4" style={{color: '#d2bc8f'}}>
-            <strong>Diagnóstico CX – Código da Conversão</strong>
+            Diagnóstico CX – Código da Conversão
           </h1>
           <div className="bg-[#1a2332] rounded-full h-3 mb-4">
             <div 
@@ -739,7 +741,7 @@ export default function DiagnosticoCX() {
               style={{backgroundColor: moduloInfo.cor}}
             ></div>
             <h2 className="text-2xl font-bold text-[#d2bc8f]">
-              <strong>{moduloInfo.nome}</strong>
+              {moduloInfo.nome}
             </h2>
           </div>
           <p className="text-white mb-6 text-lg">{moduloInfo.explicacao}</p>
@@ -747,7 +749,7 @@ export default function DiagnosticoCX() {
 
         <div className="bg-[#1a2332] rounded-xl p-8 mb-6" style={{border: '2px solid #d2bc8f'}}>
           <h3 className="text-3xl font-bold mb-6 leading-relaxed" style={{color: '#d2bc8f'}}>
-            <strong>{perguntaInfo.pergunta}</strong>
+            {perguntaInfo.pergunta}
           </h3>
 
           {mostrarExplicacao && (
@@ -766,7 +768,7 @@ export default function DiagnosticoCX() {
 
           <div className="space-y-3">
             <p className="text-white font-bold text-xl mb-4">
-              <strong>Avalie de 0 (nunca) a 10 (sempre):</strong>
+              Avalie de 0 (nunca) a 10 (sempre):
             </p>
             <div className="grid grid-cols-11 gap-2">
               {[...Array(11)].map((_, i) => (
