@@ -1,4 +1,4 @@
-# 📊 Diagnóstico CX - Código da Conversão Consciente
+#  Diagnóstico CX - Código da Conversão Consciente
 
 Sistema interativo de diagnóstico comportamental para identificar gaps de vendas e gerar leads qualificados.
 
